@@ -1,7 +1,12 @@
 import pygame
 
 from circleshape import CircleShape
-from constants import SHOT_RADIUS
+from constants import (
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
+    SHOT_EDGE_BUFFER,
+    SHOT_RADIUS
+)
 
 class Shot(CircleShape):
     def __init__(self, x, y, velocity):
@@ -14,5 +19,8 @@ class Shot(CircleShape):
     def update(self, dt):
         self.position += self.velocity * dt
         
-        # TODO: remove the shot if it goes off screen
+        # remove the shot if it goes off screen
+        if (self.position.x < -SHOT_EDGE_BUFFER or self.position.x > SCREEN_WIDTH + SHOT_EDGE_BUFFER or
+            self.position.y < -SHOT_EDGE_BUFFER or self.position.y > SCREEN_HEIGHT + SHOT_EDGE_BUFFER):
+            self.kill()
     
